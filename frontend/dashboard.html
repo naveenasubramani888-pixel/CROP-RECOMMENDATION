@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - AgriSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">🌱</span> AgriSense <span>AI</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recommendation.html">Crop Recommendation</a></li>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="history.html">Prediction History</a></li>
+        <li><a href="crops.html">Crop Knowledge Base</a></li>
+        <li><a href="insights.html">Model Insights</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">📊 Real-time Platform Analytics</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Overview of farmer queries, recommendation patterns, and confidence distributions.</p>
+
+    <div class="grid-3" style="margin-bottom: 2rem;">
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 0.9rem; color: var(--text-muted);">TOTAL RECOMMENDATIONS</div>
+        <div id="stat-total-predictions" style="font-size: 2.5rem; font-weight: 800; color: var(--accent);">0</div>
+      </div>
+
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 0.9rem; color: var(--text-muted);">MOST RECOMMENDED CROP</div>
+        <div id="stat-most-common-crop" style="font-size: 2.2rem; font-weight: 800; color: #38bdf8;">None</div>
+      </div>
+
+      <div class="card" style="text-align: center;">
+        <div style="font-size: 0.9rem; color: var(--text-muted);">AVG PREDICTION CONFIDENCE</div>
+        <div id="stat-avg-confidence" style="font-size: 2.5rem; font-weight: 800; color: #f59e0b;">0%</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <div id="crop-distribution-chart" style="width: 100%; height: 400px;"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 AgriSense AI Platform. Built for precision agriculture & decision support.</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

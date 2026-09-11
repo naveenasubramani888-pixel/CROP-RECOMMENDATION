@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Knowledge Base - AgriSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">🌱</span> AgriSense <span>AI</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recommendation.html">Crop Recommendation</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="history.html">Prediction History</a></li>
+        <li><a href="crops.html" class="active">Crop Knowledge Base</a></li>
+        <li><a href="insights.html">Model Insights</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">📚 Crop Knowledge Base</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Comprehensive agronomic guidelines for all 20 supported crop species.</p>
+
+    <div id="crops-grid" class="grid-3">
+      <!-- Dynamic crop cards loaded via JS -->
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 AgriSense AI Platform. Built for precision agriculture & decision support.</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("/crops");
+        const data = await res.json();
+        const grid = document.getElementById("crops-grid");
+        grid.innerHTML = "";
+
+        Object.entries(data.crops).forEach(([name, info]) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <div class="card-title" style="color: var(--accent)">🌾 ${name}</div>
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              <strong>Season:</strong> ${info.season}<br>
+              <strong>Optimal Temp:</strong> ${info.temp_range}<br>
+              <strong>Optimal Rainfall:</strong> ${info.rainfall_range}<br>
+              <strong>pH Range:</strong> ${info.ph_range}<br>
+              <strong>NPK Requirements:</strong> ${info.npk}
+            </div>
+            <div style="font-size: 0.85rem; background: var(--dark-bg); padding: 0.75rem; border-radius: 6px; margin-top: 0.5rem;">
+              ${info.farming_notes}
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        console.error("Error loading crops knowledge base:", e);
+      }
+    });
+  </script>
+</body>
+</html>

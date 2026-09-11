@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Insights - AgriSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">🌱</span> AgriSense <span>AI</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recommendation.html">Crop Recommendation</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="history.html">Prediction History</a></li>
+        <li><a href="crops.html">Crop Knowledge Base</a></li>
+        <li><a href="insights.html" class="active">Model Insights</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">🧠 Machine Learning Model Insights</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Comparative metrics across algorithms, confusion matrix, and feature importances.</p>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h3 style="color: var(--accent); margin-bottom: 1rem;">🏆 Champion Model Performance Summary</h3>
+      <div id="champion-details" style="font-size: 1.1rem;">Loading model insights...</div>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem; overflow-x: auto;">
+      <h3 style="color: var(--accent); margin-bottom: 1rem;">📊 Algorithm Evaluation Comparison Matrix</h3>
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--border); color: var(--text-main);">
+            <th style="padding: 0.75rem;">Model Name</th>
+            <th style="padding: 0.75rem;">Macro F1</th>
+            <th style="padding: 0.75rem;">Accuracy</th>
+            <th style="padding: 0.75rem;">Precision</th>
+            <th style="padding: 0.75rem;">Recall</th>
+            <th style="padding: 0.75rem;">CV Score (5-Fold)</th>
+            <th style="padding: 0.75rem;">Latency (ms)</th>
+          </tr>
+        </thead>
+        <tbody id="comparison-table-body">
+          <tr><td colspan="7" style="text-align: center; padding: 1.5rem;">Loading algorithm metrics...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">🧩 Confusion Matrix</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Multiclass prediction accuracy breakdown across 20 crop classes.</p>
+        <a href="/reports/figures/confusion_matrix.png" target="_blank">
+          <img src="/static/reports_figures_placeholder.png" id="cm-img" alt="Confusion Matrix" style="width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+        </a>
+      </div>
+
+      <div class="card">
+        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">⭐ Feature Importance</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Top Gini importance features influencing crop recommendations.</p>
+        <a href="/reports/figures/feature_importance.png" target="_blank">
+          <img src="/static/reports_figures_placeholder.png" id="fi-img" alt="Feature Importances" style="width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 AgriSense AI Platform. Built for precision agriculture & decision support.</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("/model-info");
+        const data = await res.json();
+        
+        const best = data.best_model;
+        if (best) {
+          document.getElementById("champion-details").innerHTML = `
+            <strong>Model:</strong> ${best.model} | 
+            <strong>Macro F1:</strong> ${best.macro_f1} | 
+            <strong>Accuracy:</strong> ${(best.accuracy * 100).toFixed(2)}% | 
+            <strong>5-Fold CV Score:</strong> ${best.cv_mean} ± ${best.cv_std} | 
+            <strong>Inference Latency:</strong> ${best.inference_time_ms} ms
+          `;
+        }
+
+        const tbody = document.getElementById("comparison-table-body");
+        tbody.innerHTML = "";
+        data.all_models_comparison.forEach(m => {
+          const tr = document.createElement("tr");
+          tr.style.borderBottom = "1px solid var(--border)";
+          tr.innerHTML = `
+            <td style="padding: 0.6rem;"><strong>${m.model}</strong></td>
+            <td style="padding: 0.6rem;"><span class="badge-val">${m.macro_f1}</span></td>
+            <td style="padding: 0.6rem;">${(m.accuracy * 100).toFixed(2)}%</td>
+            <td style="padding: 0.6rem;">${m.precision}</td>
+            <td style="padding: 0.6rem;">${m.recall}</td>
+            <td style="padding: 0.6rem;">${m.cv_mean} ± ${m.cv_std}</td>
+            <td style="padding: 0.6rem;">${m.inference_time_ms} ms</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+      } catch (e) {
+        console.error("Error loading model insights:", e);
+      }
+    });
+  </script>
+</body>
+</html>

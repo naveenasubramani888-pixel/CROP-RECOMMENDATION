@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  agrisense-web:
+    build: .
+    container_name: agrisense_ai_app
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=AgriSense AI
+      - PORT=8000
+      - DATABASE_URL=sqlite:///./agrisense.db
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    restart: always

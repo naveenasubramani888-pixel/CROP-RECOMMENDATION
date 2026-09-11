@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction History - AgriSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">🌱</span> AgriSense <span>AI</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recommendation.html">Crop Recommendation</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="history.html" class="active">Prediction History</a></li>
+        <li><a href="crops.html">Crop Knowledge Base</a></li>
+        <li><a href="insights.html">Model Insights</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">📜 Recommendation History Log</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Audit log of recent farmer input queries and AI recommendations stored in SQLite database.</p>
+
+    <div class="card" style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--border); color: var(--accent);">
+            <th style="padding: 0.75rem;">ID</th>
+            <th style="padding: 0.75rem;">Timestamp</th>
+            <th style="padding: 0.75rem;">Recommended Crop</th>
+            <th style="padding: 0.75rem;">Confidence</th>
+            <th style="padding: 0.75rem;">Key Input Parameters</th>
+            <th style="padding: 0.75rem;">Soil & Season</th>
+          </tr>
+        </thead>
+        <tbody id="history-table-body">
+          <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading history records...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 AgriSense AI Platform. Built for precision agriculture & decision support.</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

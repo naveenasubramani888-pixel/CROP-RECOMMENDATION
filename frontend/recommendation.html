@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Recommendation - AgriSense AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">🌱</span> AgriSense <span>AI</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recommendation.html" class="active">Crop Recommendation</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="history.html">Prediction History</a></li>
+        <li><a href="crops.html">Crop Knowledge Base</a></li>
+        <li><a href="insights.html">Model Insights</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">🌾 Intelligent Crop Recommendation</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Enter your farm's soil composition, climatic conditions, and regional details below.</p>
+
+    <div id="error-box" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); color: #fca5a5; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;"></div>
+
+    <form id="crop-form" class="card">
+      <!-- Soil Parameters -->
+      <div class="form-section">
+        <div class="form-section-title">🧪 SOIL PARAMETERS</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nitrogen">Nitrogen (N) <span id="nitrogen-val" class="badge-val">90</span> kg/ha</label>
+            <input type="range" id="nitrogen" min="0" max="200" value="90" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="phosphorus">Phosphorus (P) <span id="phosphorus-val" class="badge-val">42</span> kg/ha</label>
+            <input type="range" id="phosphorus" min="0" max="200" value="42" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="potassium">Potassium (K) <span id="potassium-val" class="badge-val">43</span> kg/ha</label>
+            <input type="range" id="potassium" min="0" max="250" value="43" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="ph">Soil pH <span id="ph-val" class="badge-val">6.5</span></label>
+            <input type="range" id="ph" min="3.5" max="9.5" step="0.1" value="6.5" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="soil_type">Soil Type</label>
+            <select id="soil_type" class="form-control">
+              <option value="Loamy" selected>Loamy Soil</option>
+              <option value="Clay">Clay Soil</option>
+              <option value="Sandy">Sandy Soil</option>
+              <option value="Black Soil">Black Soil</option>
+              <option value="Silty">Silty Soil</option>
+              <option value="Peaty">Peaty Acidic Soil</option>
+              <option value="Red Soil">Red Soil</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="soil_moisture">Soil Moisture <span id="soil_moisture-val" class="badge-val">70</span>%</label>
+            <input type="range" id="soil_moisture" min="10" max="100" value="70" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- Climate Parameters -->
+      <div class="form-section">
+        <div class="form-section-title">🌦️ CLIMATE PARAMETERS</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="temperature">Temperature <span id="temperature-val" class="badge-val">24.5</span> °C</label>
+            <input type="range" id="temperature" min="5" max="45" step="0.5" value="24.5" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="humidity">Relative Humidity <span id="humidity-val" class="badge-val">80</span>%</label>
+            <input type="range" id="humidity" min="15" max="100" value="80" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="rainfall">Seasonal Rainfall <span id="rainfall-val" class="badge-val">2200</span> mm</label>
+            <input type="range" id="rainfall" min="200" max="4000" step="50" value="2200" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="sunlight">Sunlight Exposure <span id="sunlight-val" class="badge-val">8.0</span> hrs/day</label>
+            <input type="range" id="sunlight" min="3" max="14" step="0.5" value="8.0" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- Farm Parameters -->
+      <div class="form-section">
+        <div class="form-section-title">🚜 FARM & REGIONAL PARAMETERS</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="season">Cropping Season</label>
+            <select id="season" class="form-control">
+              <option value="Kharif" selected>Kharif (Monsoon Crop)</option>
+              <option value="Rabi">Rabi (Winter Crop)</option>
+              <option value="Zaid">Zaid (Summer Crop)</option>
+              <option value="Whole Year">Whole Year</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="region">Region</label>
+            <select id="region" class="form-control">
+              <option value="South India" selected>South India</option>
+              <option value="North India">North India</option>
+              <option value="East India">East India</option>
+              <option value="West India">West India</option>
+              <option value="Central India">Central India</option>
+              <option value="Himalayan Region">Himalayan Region</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="irrigation">Irrigation Facilities</label>
+            <select id="irrigation" class="form-control">
+              <option value="Available" selected>Canal / Well Irrigation</option>
+              <option value="Rainfed">Rainfed (No Irrigation)</option>
+              <option value="Drip Irrigation">Drip / Micro Irrigation</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; font-size: 1.1rem; padding: 1rem;">
+        🔍 Analyze & Recommend Crop
+      </button>
+    </form>
+
+    <!-- Recommendation Result Card -->
+    <div id="result-card" class="result-card">
+      <div class="recommended-header">
+        <div style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Recommended Crop</div>
+        <div id="recommended-crop-name" class="crop-badge-large">RICE</div>
+        <div id="confidence-badge" class="confidence-chip">92.4% Match Confidence</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div>
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">🏆 Top 3 Suitable Crops</h4>
+          <div id="top-crops-list"></div>
+        </div>
+
+        <div>
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">💡 Why this Recommendation?</h4>
+          <ul id="factors-list" style="padding-left: 1.2rem; color: var(--text-muted);"></ul>
+        </div>
+      </div>
+
+      <div id="warnings-box" style="margin-top: 1.5rem; display: none; background: rgba(239,68,68,0.15); border-left: 4px solid var(--danger); padding: 1rem; border-radius: 6px;"></div>
+
+      <div class="notice-box">
+        <strong>Important Notice:</strong> This recommendation is an AI-based decision-support suggestion derived from ecological patterns and should be validated with local agricultural extension officers or soil testing labs before purchasing seeds.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 AgriSense AI Platform. Built for precision agriculture & decision support.</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/prediction.js"></script>
+</body>
+</html>
